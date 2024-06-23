@@ -17,14 +17,10 @@ def download_and_cut():
             os.makedirs("YoutubeDownloads/" + fileName)
 
         yt = YouTube(url)
-
-        mp4_files = yt.streams.filter(file_extension="mp4")
+        mp4Stream = yt.streams.filter(file_extension="mp4", res="720p").first()
         print("Format: MP4")
-
-        mp4_720p_files = mp4_files.get_by_resolution("720p")
         print("Resolution: 720p")
-
-        latestDownload = mp4_720p_files.download("YoutubeDownloads")
+        latestDownload = mp4Stream.download(output_path="YoutubeDownloads")
 
         clip = VideoFileClip(latestDownload)
         audio = AudioFileClip(latestDownload)
